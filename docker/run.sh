@@ -1,9 +1,9 @@
 # input expected as below:
 # VARIABLE:PARAMTER,VARIBALE:PARAMTER
 
-for var in $1 ; do
-var_name = $(echo $var|awk -F : '{print $1}')
-parameter = $(echo var|awk -F : '{print $2)')
-value = $( aws ssm get-parameter --name $parameter --with-decryption |jq '.Parameter.Value'|sed -e 's/"//g' )
-echo export $(var_name) = ${value}
+for var in $1; do
+    var_name = $(echo $var | awk -F : '{print $1}')
+    parameter = $(echo $var | awk -F : '{print $2)')
+    value = $(aws ssm get-parameter --name $parameter --with-decryption | jq '.Parameter.Value' | sed -e 's/"//g')
+    echo export $(var_name) = ${value}
 done
